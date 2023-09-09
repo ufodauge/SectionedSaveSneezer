@@ -35,6 +35,12 @@ internal class Config
         };
     }
 
+    /// <summary>
+    /// Load `config.yml`.
+    /// Returns `null` if failed. 
+    /// </summary>
+    /// <param name="config_path"></param>
+    /// <returns></returns>
     internal static Config Load(string config_path)
     {
         try
@@ -72,9 +78,8 @@ internal class Config
     {
         using (var config_file = new StreamWriter(path))
         {
-            var yaml = new SerializerBuilder()
-                .Build()
-                .Serialize(this);
+            var serializer = new Serializer();
+            var yaml = serializer.Serialize(this);
 
             config_file.Write(yaml);
         };
