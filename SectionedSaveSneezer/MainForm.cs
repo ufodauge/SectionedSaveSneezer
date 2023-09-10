@@ -16,12 +16,14 @@ namespace SectionedSaveSneezer
             = "コンフィグ用ファイルを作成しました。確認し、必要に応じて編集し終えたら OK を押してください。";
 
 
-        private readonly string homeDir;
-        private readonly string gibbonDir;
-        private readonly string tempEvacuationDir;
-        private readonly string configPath;
+        private string homeDir;
+        private string gibbonDir;
+        private string tempEvacuationDir;
+        private string configPath;
+        private string metaKeySyncedPath;
+        private string metaKeyLocaldPath;
 
-        private readonly string initialTicks;
+        private string initialTicks;
 
         private Config config;
 
@@ -130,9 +132,12 @@ namespace SectionedSaveSneezer
 
             var profiles = new ProfileList();
 
+            Guid guid = new Guid();
+
             for (int i = 0; i < 39; i++)
             {
-                Guid guid = Guid.NewGuid();
+                guid = Guid.NewGuid();
+
                 var saveData = new SaveData(i);
 
                 var profile = new Profile(guid, dateTime.Ticks, dateTime.Ticks);
@@ -147,8 +152,13 @@ namespace SectionedSaveSneezer
                 dateTime = dateTime.AddDays(1);
             }
 
-            string meta_key_synced_path = $@"{gibbonDir}\META_KEY.synced.txt";
-            profiles.CreateFileWith(meta_key_synced_path);
+            metaKeyLocaldPath = $@"{gibbonDir}\META_KEY.synced.txt";
+            profiles.CreateFileWith(metaKeyLocaldPath);
+
+            var metaConfig = new MetaConfig(guid);
+
+            metaKeyLocaldPath = $@"{gibbonDir}\META_KEY.local.txt";
+            metaConfig.CreateFileWith(metaKeyLocaldPath);
         }
 
         private void DeleteSaves()

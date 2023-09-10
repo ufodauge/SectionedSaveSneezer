@@ -29,7 +29,7 @@ internal class SaveData
             new StoredData()
             {
                 identifier = @"""Gameplay Data""",
-                serialized = $@"""{{\""storyModeCompleted\"":{storyModeCompleted},\""liberationModeCompleted\"":false}}"""
+                serialized = $@"""{{\""storyModeCompleted\"":{storyModeCompleted.ToString().ToLower()},\""liberationModeCompleted\"":false}}"""
             },
             new StoredData()
             {
@@ -67,9 +67,9 @@ internal class SaveData
         builder.Append(string.Join(",", storedDatas));
         builder.Append(']');
 
-        return $@"{{""storedData"": ["
+        return $@"{{""storedData"": "
              + builder
-             + $@"]}}";
+             + $@"}}";
     }
 }
 

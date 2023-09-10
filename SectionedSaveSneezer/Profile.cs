@@ -11,7 +11,7 @@ internal class Profile
 
     public Profile(Guid guid, long created, long lastPlayed)
     {
-        this.guid   = guid;
+        this.guid = guid;
         this.created = created;
         this.lastPlayed = lastPlayed;
     }
@@ -20,11 +20,11 @@ internal class Profile
     {
         return "{"
             + $@"""id"": ""{guid}"", "
-            + $@"""created"": ""{created}"", "
-            + $@"""lastPlayed"": ""{lastPlayed}"", "
-            + $@"""playTime"": ""{0}"", "
-            + $@"""isValid"": ""{true}"", "
-            + $@"""syncState"": ""{SyncState.Synced}"""
+            + $@"""created"": {created}, "
+            + $@"""lastPlayed"": {lastPlayed}, "
+            + $@"""playTime"": {0}, "
+            + $@"""isValid"": true, "
+            + $@"""syncState"": {(int)SyncState.Synced}"
             + "}";
     }
 }
@@ -36,7 +36,8 @@ enum SyncState
     Disposed,
 }
 
-internal class ProfileList{
+internal class ProfileList
+{
     private readonly List<Profile> profiles;
 
     public ProfileList()
