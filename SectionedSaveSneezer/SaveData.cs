@@ -7,14 +7,25 @@ internal class SaveData
     private readonly int checkPoint;
     private readonly bool storyModeCompleted;
 
-    private readonly List<StoredData> storedDatas;
-
+    private readonly List<StoredData> storedData;
+  
     public SaveData(int check_point)
     {
-        checkPoint = check_point;
+        checkPoint         = check_point;
         storyModeCompleted = false;
+        storedData         = CreateStoredData();
+    }
 
-        storedDatas = new List<StoredData>()
+    public SaveData(int check_point, bool story_mode_completed)
+    {
+        checkPoint         = check_point;
+        storyModeCompleted = story_mode_completed;
+        storedData         = CreateStoredData();
+    }
+
+    private List<StoredData> CreateStoredData() 
+    { 
+        return new List<StoredData>()
         {
             new StoredData()
             {
@@ -53,6 +64,7 @@ internal class SaveData
             },
         };
     }
+
     internal void CreateFileWith(string path)
     {
         using (var save_data_file = new StreamWriter(path)) { 
@@ -64,7 +76,7 @@ internal class SaveData
     {
         var builder = new StringBuilder();
         builder.Append('[');
-        builder.Append(string.Join(",", storedDatas));
+        builder.Append(string.Join(",", storedData));
         builder.Append(']');
 
         return $@"{{""storedData"": "

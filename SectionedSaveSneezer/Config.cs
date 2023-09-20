@@ -4,35 +4,38 @@ using YamlDotNet.Serialization;
 
 internal class Config
 {
-    public AudioData audioData;
-    public SensitivityData sensitivityData;
-    public GraphicsData graphicsData;
+    public AudioData AudioData { get; set; }
+    public SensitivityData SensitivityData { get; set; }
+    public GraphicsData GraphicsData { get; set; }
+    public bool CreateEndingSaves { get; set; }
 
     public Config()
     {
-        audioData = new AudioData()
+        AudioData = new AudioData()
         {
-            musicVol = 1.0,
-            sfxVol = 1.0
+            MusicVol = 0.3,
+            SfxVol = 0.3,
         };
 
-        sensitivityData = new SensitivityData()
+        SensitivityData = new SensitivityData()
         {
-            sensitivity = .5,
+            Sensitivity = .5,
         };
 
-        graphicsData = new GraphicsData()
+        GraphicsData = new GraphicsData()
         {
-            mobilePerformanceMode = false,
-            curResolution = new CurResolution()
+            MobilePerformanceMode = false,
+            CurResolution = new CurResolution()
             {
-                x = 1920,
-                y = 1080,
+                X = 1920,
+                Y = 1080,
             },
-            curRefreshRate = 60,
-            fullscreen = true,
-            graphicsQuality = GraphicsQuality.High
+            CurRefreshRate = 60,
+            Fullscreen = true,
+            GraphicsQuality = GraphicsQuality.High
         };
+
+        CreateEndingSaves = false;
     }
 
     /// <summary>
@@ -48,7 +51,7 @@ internal class Config
             using (var config_file = new StreamReader(config_path))
             {
                 var deserializer = new Deserializer();
-                Config config = deserializer.Deserialize<Config>(config_file);
+                Config config    = deserializer.Deserialize<Config>(config_file);
 
                 return config;
             };
@@ -69,9 +72,9 @@ internal class Config
 
     override public string ToString()
     {
-        return $@"{{""audioData"": {audioData},"
-             + $@"""sensitivityData"": {sensitivityData},"
-             + $@"""graphicsData"": {graphicsData}}}";
+        return $@"{{""audioData"": {AudioData},"
+             + $@"""sensitivityData"": {SensitivityData},"
+             + $@"""graphicsData"": {GraphicsData}}}";
     }
 
     internal void SaveAsYaml(string path)
@@ -88,52 +91,52 @@ internal class Config
 
 internal class AudioData
 {
-    public double musicVol;
-    public double sfxVol;
+    public double MusicVol { get; set; }
+    public double SfxVol { get; set; }
 
     override public string ToString()
     {
-        return $@"{{""musicVol"": {musicVol}, "
-             + $@"""sfxVol"": {sfxVol}}}";
+        return $@"{{""musicVol"": {MusicVol}, "
+             + $@"""sfxVol"": {SfxVol}}}";
     }
 }
 
 internal class SensitivityData
 {
-    public double sensitivity;
+    public double Sensitivity { get; set; }
 
     override public string ToString()
     {
-        return $@"{{""sensitivity"": {sensitivity}}}";
+        return $@"{{""sensitivity"": {Sensitivity}}}";
     }
 }
 
 internal class GraphicsData
 {
-    public bool mobilePerformanceMode;
-    public CurResolution curResolution;
-    public int curRefreshRate;
-    public bool fullscreen;
-    public GraphicsQuality graphicsQuality;
+    public bool MobilePerformanceMode { get; set; }
+    public CurResolution CurResolution { get; set; }
+    public int CurRefreshRate { get; set; }
+    public bool Fullscreen { get; set; }
+    public GraphicsQuality GraphicsQuality { get; set; }
 
     override public string ToString()
     {
-        return $@"{{""mobilePerformanceMode"": {mobilePerformanceMode.ToString().ToLower()},"
-             + $@"""curResolution"": {curResolution},"
-             + $@"""curRefreshRate"": {curRefreshRate},"
-             + $@"""fullscreen"": {fullscreen.ToString().ToLower()},"
-             + $@"""graphicsQuality"": {(int)graphicsQuality}}}";
+        return $@"{{""mobilePerformanceMode"": {MobilePerformanceMode.ToString().ToLower()},"
+             + $@"""curResolution"": {CurResolution},"
+             + $@"""curRefreshRate"": {CurRefreshRate},"
+             + $@"""fullscreen"": {Fullscreen.ToString().ToLower()},"
+             + $@"""graphicsQuality"": {(int)GraphicsQuality}}}";
     }
 }
 
 internal class CurResolution
 {
-    public int x;
-    public int y;
+    public int X { get; set; }
+    public int Y { get; set; }
 
     override public string ToString()
     {
-        return $@"{{""x"": {x}, ""y"": {y}}}";
+        return $@"{{""x"": {X}, ""y"": {Y}}}";
     }
 }
 
